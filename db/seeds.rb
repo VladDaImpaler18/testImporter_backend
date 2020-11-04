@@ -21,3 +21,33 @@ q.diagram.attach(
   )
 q.save
 # Works great
+
+q = c.questions.build(
+  :question => "Which relationship best describes the interactions between lettuce and a rabbit?",
+  :answer => "producer — consumer",
+  )
+q.dummy << "predator — prey" << "parasite — host" << "decomposer — scavenger"
+q.save
+
+q = c.questions.build(
+  :question => "If the population of bobcats decreases, what will most likely be the long-term effect on the rabbit population?",
+  :answer => "It will increase and then decrease.",
+  :diagram_info => "The diagram below shows a food chain."
+)
+
+q.dummy << "It will increase, only." << "It will decrease, only." << "It will decrease and then increase."
+
+q.diagram.attach(
+  io: File.open(Rails.root.join('storage', 'seed_pictures','food_chain.jpg')),
+  filename: 'food_chain.jpg',
+  content_type: "image/jpg"
+)
+q.save
+
+q = c.questions.build(
+  :question => "In an ecosystem, which component is not recycled?",
+  :answer => "energy"
+)
+
+q.dummy << "water" << "oxygen" << "carbon"
+q.save
