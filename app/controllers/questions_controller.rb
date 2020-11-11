@@ -17,4 +17,11 @@ class QuestionsController < ApplicationController
     def create
         binding.pry
     end
+
+    private
+
+    def question_params
+        params.permit(:question, :diagram, :diagram_info, :answer, dummy:[])
+    end
+    
 end
