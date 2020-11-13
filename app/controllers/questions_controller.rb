@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
 
     def create
         binding.pry
+        category = params.permit(:cataegory)
     end
 
     private
