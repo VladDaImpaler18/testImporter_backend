@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-
+#Import through Categories -- Export through Questions!?
 
     def index
         categories = Category.all

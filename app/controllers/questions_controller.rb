@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-
+#Import through Categories -- Export through Questions!?
     def index
         questions = Question.all
         render json: questions, except: [:updated_at, :created_at]
@@ -15,8 +15,16 @@ class QuestionsController < ApplicationController
     end
 
     def create
-        binding.pry
-        category = params.permit(:cataegory)
+        categoryInput = params.permit(:category)["category"].capitalize
+        category = Category.find_or_create_by(:title => categoryInput)
+        if !Question.find_by(params.permit(:question)) #new question check
+            question = category.questions.build(question_params)
+            question.save
+            render json: question.to_json(:include =>{ :category => {:only => [:title]} } ) #need to somehow add category. May have to set frontend Category Obj to have id #
+        else
+            #render json: { error: 'Duplicate question detected. Cancelled action'}
+        end
+        
     end
 
     private
