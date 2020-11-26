@@ -8,13 +8,14 @@ class CategoriesController < ApplicationController
     end
 
     def show
-        category = Category.find_by(:id => params[:id])
-        #binding.pry
-        if category
-            render json: category.questions, except: [:created_at, :updated_at]
-        else
-            render json: { message: 'Category not found'}
-        end
+        #is this even needed if i'm importing and creating JS objects?
+
+        #category = Category.find_by(:id => params[:id])
+        #if category
+            #render json: category.questions, except: [:created_at, :updated_at]
+        #else
+            #render json: { message: 'Category not found'}
+        #end
     end
 
     def new
