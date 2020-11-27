@@ -21,17 +21,18 @@ class QuestionsController < ApplicationController
     end
 
     def destroy
-        question = Question.find_by(params.permit(:question))
-        if question.delete
-            render json: {message: "Question successfully deleted"}
-        else
+        question = Question.find_by(params[:question])
+        binding.pry
+        #if question.delete
+        #    render json: {message: "Question successfully deleted"}
+       # else
             #render json: {message: "Failed"}
-        end
+        #end
     end
 
     def update
-
-        question = Question.find_by(params.permit[:original])
+        binding.pry
+        question = Question.find_by(params[:original])
         question.update(question_params);
 
         render json: question.to_json(:include =>{ :category => {:only => [:title]} } )
@@ -41,14 +42,13 @@ class QuestionsController < ApplicationController
     def create
         categoryInput = params.permit(:category)["category"].capitalize
         category = Category.find_or_create_by(:title => categoryInput)
-        if !Question.find_by(params.permit(:question)) #new question check
-            question = category.questions.build(question_params)
-            question.save
+        binding.pry
+        question = category.questions.build(question_params)
+        if question.save
             render json: question.to_json(:include =>{ :category => {:only => [:title]} } )
         else
-            #render json: { error: 'Duplicate question detected. Cancelled action'}
+            #render json: { error: 'messagae error'}
         end
-        
     end
 
     private

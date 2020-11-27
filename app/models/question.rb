@@ -4,4 +4,6 @@ class Question < ApplicationRecord
     has_one_attached :diagram
 
     validates :question, :answer, presence: true
+    validates :question, uniqueness: true
+    
 end
