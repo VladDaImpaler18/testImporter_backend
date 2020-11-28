@@ -21,19 +21,17 @@ class QuestionsController < ApplicationController
     end
 
     def destroy
-        question = Question.find_by(params[:question])
-        binding.pry
-        #if question.delete
-        #    render json: {message: "Question successfully deleted"}
-       # else
+        question = Question.find_by(:question => params[:question])
+         if question.delete
+            render json: {message: "Question successfully deleted"}
+        else
             #render json: {message: "Failed"}
-        #end
+        end
     end
 
     def update
-        binding.pry
-        question = Question.find_by(params[:original])
-        question.update(question_params);
+        question = Question.find_by(:question => params[:original])
+        question.update(question_params)
 
         render json: question.to_json(:include =>{ :category => {:only => [:title]} } )
 
@@ -42,8 +40,8 @@ class QuestionsController < ApplicationController
     def create
         categoryInput = params.permit(:category)["category"].capitalize
         category = Category.find_or_create_by(:title => categoryInput)
-        binding.pry
         question = category.questions.build(question_params)
+        binding.pry
         if question.save
             render json: question.to_json(:include =>{ :category => {:only => [:title]} } )
         else
