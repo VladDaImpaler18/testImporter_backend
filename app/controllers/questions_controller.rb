@@ -32,7 +32,6 @@ class QuestionsController < ApplicationController
     def update
         question = Question.find_by(:question => params[:original])
         question.update(question_params)
-
         render json: question.to_json(:include =>{ :category => {:only => [:title]} } )
 
     end
@@ -41,7 +40,6 @@ class QuestionsController < ApplicationController
         categoryInput = params.permit(:category)["category"].capitalize
         category = Category.find_or_create_by(:title => categoryInput)
         question = category.questions.build(question_params)
-        binding.pry
         if question.save
             render json: question.to_json(:include =>{ :category => {:only => [:title]} } )
         else
